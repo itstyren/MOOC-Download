@@ -31,6 +31,10 @@ MOOC_DOWNLOAD
   -- sth else
  ```
 
- # TO DO LIST
-    * [ ] 下载文档按课程归类并指定存储路径
-    * [ ] 加入直接搜索慕课功能
+# TO DO LIST
+* 下载文档按课程归类并指定存储路径
+* 输入错误判定
+* 加入直接搜索慕课功能
+
+# 致谢
+本程序思路来源于[Adam的程序](https://github.com/Dayunxi/getMOOCmedia)，感谢！
