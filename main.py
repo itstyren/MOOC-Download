@@ -61,9 +61,9 @@ def get_course_all_source(course_id):
 
     source_info = requests.post(
         SOURCE_INFO_URL, data=post_data, headers=HEADER)
+    # 对文档内容进行解码，以便查看中文
     source_info_transcoding = source_info.text.encode('utf-8').decode(
         'unicode_escape')
-    # 对文档内容进行解码，以便查看中文
     # 这里的id是一级目录id
     chapter_pattern_compile = re.compile(
         r'homeworks=.*?;.+id=(\d+).*?name="(.*?)";')
@@ -111,7 +111,7 @@ def get_course_all_source(course_id):
                 for pdf_index, single_pdf in enumerate(pdf_set):
                     rename = re.sub(name_pattern_compile, '', single_pdf[3])
                     file.write('　　[文档] %s \n' % (rename))
-                    # get_content(single_pdf,'%d.%d.%d [文档] %s'%(index+1,sub_index+1,pdf_index+1+count_num,rename))
+                    get_content(single_pdf,'%d.%d.%d [文档] %s'%(index+1,sub_index+1,pdf_index+1+count_num,rename))
 
 
 def get_content(single_content, name, *args):
@@ -133,10 +133,10 @@ def get_content(single_content, name, *args):
         'c0-scriptName': 'CourseBean',
         'c0-methodName': 'getLessonUnitLearnVo',
         'c0-id': '0',
-        'c0-param0': 'number:' + single_content[0],  # 文件/视频ID
+        'c0-param0': 'number:' + single_content[0],  # 二级目录id
         'c0-param1': 'number:' + single_content[1],  # 判定文件还是视频
         'c0-param2': 'number:0',
-        'c0-param3': 'number:' + single_content[2],  # 这一内容id
+        'c0-param3': 'number:' + single_content[2],  # 具体资源id
         'batchId': '1492168138043'
     }
     sources = requests.post(
@@ -166,7 +166,7 @@ def get_content(single_content, name, *args):
         if not os.path.isdir('PDFs'):
             os.mkdir(r'PDFs')
         with open('PDFs\\' + name + '.pdf', 'wb') as file:
-            file.writelines(pdf_file.content)
+            file.write(pdf_file.content)
 
 
 def select_video_level():
