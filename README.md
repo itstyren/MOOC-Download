@@ -1,7 +1,10 @@
 # MOOC-Download 中国大学慕爬虫
 项目为基于python3实现的爬虫，用于爬取指定课程资源的视频及可下载文档。
 
+
 实现过程说明可以查看[我的博客](https://cyrusrenty.github.io//2018/12/03/moocspider/)
+
+![](https://i.imgur.com/kpmVsqf.jpg)
 
 # 特点
 * 视频可选择清晰度，存储为下载链接，可使用第三方软件下载。
@@ -20,7 +23,8 @@ python main.py
 ```
 
 # 注意事项
-运行后会出现文档结构如下
+* 课程id为进入课程页面后，位于地址栏l中的，例如地址为：`https://www.icourse163.org/course/WHUT-1001861003?tid=1002066005` ，则课程id为：WHUT-1001861003
+* 运行后会出现文档结构如下
 ```
 MOOC_DOWNLOAD
   -- PDFs                     存放所有下载的pdf文档
