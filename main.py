@@ -154,8 +154,9 @@ def get_content(single_content, name, *args):
         with open('Links.txt', 'a', encoding='utf-8') as file:
             file.write('%s \n' % (video_down_url))
         with open('Rename.bat', 'a', encoding='utf-8') as file:
+            video_down_url=re.sub(r'/','_',video_down_url)
             file.write('rename "' + re.search(
-                r'http:.*/(.*?.mp4)', video_down_url).group(1) + '" "' + name +
+                r'http:.*video_(.*.mp4)', video_down_url).group(1) + '" "' + name +
                        '.mp4"' + '\n')
 
     # 如果是文档的话
