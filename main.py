@@ -111,7 +111,10 @@ def get_course_all_source(course_id):
                 for pdf_index, single_pdf in enumerate(pdf_set):
                     rename = re.sub(name_pattern_compile, '', single_pdf[3])
                     file.write('　　[文档] %s \n' % (rename))
-                    get_content(single_pdf,'%d.%d.%d [文档] %s'%(index+1,sub_index+1,pdf_index+1+count_num,rename))
+                    get_content(
+                        single_pdf, '%d.%d.%d [文档] %s' %
+                        (index + 1, sub_index + 1, pdf_index + 1 + count_num,
+                         rename))
 
 
 def get_content(single_content, name, *args):
@@ -143,21 +146,33 @@ def get_content(single_content, name, *args):
         SOURCE_RESOURCE_URL, headers=HEADER, data=post_data).text
     # 如果是视频的话
     if single_content[1] == '1':
-        if args[0] == 'a':
+        try:
+            if args[0] == 'a':
+                download_pattern_compile = re.compile(
+                    r'mp4SdUrl="(.*?\.mp4).*?"')
+            elif args[0] == "b":
+                download_pattern_compile = re.compile(
+                    r'mp4HdUrl="(.*?\.mp4).*?"')
+            else:
+                download_pattern_compile = re.compile(
+                    r'mp4ShdUrl="(.*?\.mp4).*?"')
+            video_down_url = re.search(download_pattern_compile,
+                                       sources).group(1)
+        except AttributeError:
+            print('－－－－－－－－－－－－－－－－－－－－－－－－')
+            print(name + '没有该清晰度格式，降级处理')
+            print('－－－－－－－－－－－－－－－－－－－－－－－－')
             download_pattern_compile = re.compile(r'mp4SdUrl="(.*?\.mp4).*?"')
-        elif args[0] == "b":
-            download_pattern_compile = re.compile(r'mp4HdUrl="(.*?\.mp4).*?"')
-        else:
-            download_pattern_compile = re.compile(r'mp4ShdUrl="(.*?\.mp4).*?"')
-        video_down_url = re.search(download_pattern_compile, sources).group(1)
+            video_down_url = re.search(download_pattern_compile,
+                                       sources).group(1)
         print('正在存储链接：' + name + '.mp4')
         with open('Links.txt', 'a', encoding='utf-8') as file:
             file.write('%s \n' % (video_down_url))
         with open('Rename.bat', 'a', encoding='utf-8') as file:
-            video_down_url=re.sub(r'/','_',video_down_url)
+            video_down_url = re.sub(r'/', '_', video_down_url)
             file.write('rename "' + re.search(
-                r'http:.*video_(.*.mp4)', video_down_url).group(1) + '" "' + name +
-                       '.mp4"' + '\n')
+                r'http:.*video_(.*.mp4)', video_down_url).group(1) + '" "' +
+                       name + '.mp4"' + '\n')
 
     # 如果是文档的话
     else:
