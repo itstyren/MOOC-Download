@@ -30,7 +30,7 @@ class Course(object):
         id_pattern_compile = re.compile(r'id:(\d+),')
         # 获取课程名称
         basicinfo_pattern_compile = re.compile(
-            r'<meta name="description" content=".*?,(.*?),(.*?),.*?/>')
+            r'<meta name="description" .*?content=".*?,(.*?),(.*?),.*?/>')
         basic_set = re.search(basicinfo_pattern_compile, course_page.text)
         self.course_title = basic_set.group(1)
         self.course_collage = basic_set.group(2)
@@ -173,7 +173,6 @@ def get_content(single_content, name, *args):
             file.write('rename "' + re.search(
                 r'http:.*video_(.*.mp4)', video_down_url).group(1) + '" "' +
                        name + '.mp4"' + '\n')
-
     # 如果是文档的话
     else:
         pdf_download_url = re.search(r'textOrigUrl:"(.*?)"', sources).group(1)
