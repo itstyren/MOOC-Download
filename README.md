@@ -2,7 +2,7 @@
 项目为基于python3实现的爬虫，用于爬取指定课程资源的视频及可下载文档。
 
 
-实现过程说明可以查看[我的博客](https://cyrusrenty.github.io//2018/12/03/moocspider/)
+实现过程说明可以查看[我的博客](https://github.com/itstyren/Archived-Blog/blob/master/_posts/blog/python/Spider/2018-12-3-moocspider.md)
 
 ![](https://i.imgur.com/kpmVsqf.jpg)
 
